@@ -28,14 +28,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     button.addEventListener('click', (ev) => {
         let matrixSize = +document.querySelector('.matrix-size').value
-        console.log(matrixSize)
 
         let adjacencyMatrix = getAdjacencyMatrix(matrixSize)
+        console.log("Матрица смежности")
         console.log(adjacencyMatrix)
 
         let rightIncidentMatrix = getRightIncidentMatrix(adjacencyMatrix, matrixSize)
+        console.log("Матрица правых инциденций")
         console.log(rightIncidentMatrix)
         let leftIncidentMatrix = getLeftIncidentMatrix(adjacencyMatrix, matrixSize)
+        console.log("Матрица левых инциденций")
         console.log(leftIncidentMatrix)
 
         showLeftIncidentMatrix(leftIncidentMatrix, matrixSize)
@@ -75,8 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
             let rowVal = "";
             for (let j = 0; j < matrixSize; j++) {
                 let val = matrix[i][j];
-                let index = j
-                rowVal += `${val !== null && val !== '0' ? ++index : ''} `
+                rowVal += `${val !== null && val !== '0' ? val : ''} `
             }
             let index = i
             row.innerHTML = `<span>G<sup>-</sup>(${++index})</span> { ${rowVal}}`
@@ -98,8 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
             let rowVal = "";
             for (let j = 0; j < matrixSize; j++) {
                 let val = matrix[i][j];
-                let index = j
-                rowVal += `${val !== null && val !== '0' ? ++index: ''} `
+                rowVal += `${val !== null && val !== '0' ? val: ''} `
             }
             let index = i
             row.innerHTML = `<span>G<sup>+</sup>(${++index})</span> { ${rowVal}}`
@@ -113,7 +113,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
         for (let i = 0; i < matrixSize; i++) {
             for (let j = 0; j < matrixSize; j++) {
-                let val = adjacencyMatrix[i][j]
+                let val
+                if (adjacencyMatrix[i][j] !== '0') {
+                    let index = j
+                    val = ++index
+                } else {
+                    val = '0'
+                }
                 arr[i][j] = val;
             }
         }
@@ -127,7 +133,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
         for (let j = 0; j < matrixSize; j++) {
             for (let i = 0; i < matrixSize; i++) {
-                let val = adjacencyMatrix[i][j]
+                let val
+                if (adjacencyMatrix[i][j] !== '0') {
+                    let index = i
+                    val = ++index
+                } else {
+                    val = '0'
+                }
                 arr[j][i] = val;
             }
         }
