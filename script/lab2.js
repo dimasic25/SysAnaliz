@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     function showNewNumbers(mapLevels) {
         var newNumbersWrapper = document.querySelector('.new-numbers-wrapper');
-        newNumbersWrapper.innerHTML = "";
+        clearElement(newNumbersWrapper);
         var newNumbersHeader = document.createElement('h2');
         newNumbersHeader.textContent = "Изменение нумерации";
         newNumbersWrapper.appendChild(newNumbersHeader);
@@ -173,23 +173,25 @@ document.addEventListener('DOMContentLoaded', function () {
             console.log("Главная матрица");
             console.log(mapLevels);
             var _loop_3 = function (column) {
-                var tempMap = mapLevels.get(pastLevel);
-                var key = column;
-                if (tempMap.has(++key) || vertices.some(function (element) { return element == column; })) {
+                // let tempMap = mapLevels.get(pastLevel)
+                // let key = column
+                // if (tempMap.has(++key) || vertices.some((element) => element == column)) {
+                if (vertices.some(function (element) { return element == column; })) {
                     return "continue";
                 }
                 else {
-                    console.log("Столбец не из матрицы");
-                    console.log(column);
-                    console.log("tempMap");
-                    console.log(tempMap);
-                    console.log("mainMap");
-                    console.log(mainMap);
+                    // console.log("Столбец не из матрицы")
+                    // console.log(column)
+                    // console.log("tempMap")
+                    // console.log(tempMap)
+                    // console.log("mainMap")
+                    // console.log(mainMap)
                     var isVertexLevel = true;
                     for (var row = 0; row < matrixSize; row++) {
                         if (adjacencyMatrix[row][column] === '1') {
                             var keyRow = row;
-                            if (!tempMap.has(keyRow + 1) && !mainMap.has(keyRow + 1)) {
+                            // if (!tempMap.has(keyRow + 1) && !mainMap.has(keyRow + 1)) {
+                            if (!mainMap.has(keyRow + 1)) {
                                 isVertexLevel = false;
                             }
                         }
@@ -197,8 +199,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     if (isVertexLevel) {
                         vertices.push(column);
                         map_1.set(column + 1, newNumber);
-                        console.log("map");
-                        console.log(map_1);
+                        // console.log("map")
+                        // console.log(map)
                         newNumber++;
                     }
                     else {

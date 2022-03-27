@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function showNewNumbers(mapLevels) {
         let newNumbersWrapper = document.querySelector('.new-numbers-wrapper')
-        newNumbersWrapper.innerHTML = ""
+        clearElement(newNumbersWrapper)
 
         let newNumbersHeader = document.createElement('h2')
         newNumbersHeader.textContent = "Изменение нумерации"
@@ -196,23 +196,25 @@ document.addEventListener('DOMContentLoaded', () => {
             console.log("Главная матрица")
             console.log(mapLevels)
             for (let column = 0; column < matrixSize; column++) {
-                let tempMap = mapLevels.get(pastLevel)
-                let key = column
-                if (tempMap.has(++key) || vertices.some((element) => element == column)) {
+                // let tempMap = mapLevels.get(pastLevel)
+                // let key = column
+                // if (tempMap.has(++key) || vertices.some((element) => element == column)) {
+                if (vertices.some((element) => element == column)) {
                     continue
                 } else {
-                    console.log("Столбец не из матрицы")
-                    console.log(column)
-                    console.log("tempMap")
-                    console.log(tempMap)
-                    console.log("mainMap")
-                    console.log(mainMap)
+                    // console.log("Столбец не из матрицы")
+                    // console.log(column)
+                    // console.log("tempMap")
+                    // console.log(tempMap)
+                    // console.log("mainMap")
+                    // console.log(mainMap)
                     let isVertexLevel = true
 
                     for (let row = 0; row < matrixSize; row++) {
                         if (adjacencyMatrix[row][column] === '1') {
                             let keyRow = row
-                            if (!tempMap.has(keyRow + 1) && !mainMap.has(keyRow + 1)) {
+                            // if (!tempMap.has(keyRow + 1) && !mainMap.has(keyRow + 1)) {
+                            if (!mainMap.has(keyRow + 1)) {
                                 isVertexLevel = false
                             }
 
@@ -222,8 +224,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (isVertexLevel) {
                         vertices.push(column)
                         map.set(column + 1, newNumber)
-                        console.log("map")
-                        console.log(map)
+                        // console.log("map")
+                        // console.log(map)
                         newNumber++
                     } else {
                         isVertexLevel = true
