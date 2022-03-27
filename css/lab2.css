@@ -18,7 +18,7 @@ body {
     align-items: center;
 }
 
-label {
+span {
     font-size: 20px;
     font-weight: bold;
 }
@@ -29,8 +29,24 @@ label {
     border: 1px solid grey;
 }
 
+.error {
+    padding-top: 10px;
+}
+
+.right-incident-matrix-wrapper {
+    margin-top: 10px;
+}
+
 .flex-el {
     margin: auto;
+}
+
+.answer {
+    font-size: 20px;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
 }
 
 .btn {

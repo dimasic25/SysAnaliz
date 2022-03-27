@@ -8,9 +8,9 @@
 <body>
 <div class="wrapper">
     <div class="menu-wrapper flex-el">
-        <label>
+        <span>
             Размер матрицы смежности:
-        </label>
+        </span>
         <span class="custom-dropdown">
             <select required class="matrix-size">
                 <option selected>2</option>
@@ -44,6 +44,14 @@
             <td><input type="number" min="0" max="1" value="0" required></td>
         </tr>
     </table>
+
+    <div class="error flex-el">
+    </div>
+
+    <div class="answer">
+        <div class="new-numbers-wrapper"></div>
+        <div class="right-incident-matrix-wrapper"></div>
+    </div>
 </div>
 
 <script src="script/lab2.js"></script>
