@@ -43,6 +43,9 @@ document.addEventListener('DOMContentLoaded', function () {
             var rightIncidentMatrix = getRightIncidentMatrix(newAdjacencyMatrix, matrixSize);
             showNewNumbers(mapLevels);
             showRightIncidentMatrix(rightIncidentMatrix, matrixSize);
+            console.log(mapLevels);
+            console.log(newAdjacencyMatrix);
+            console.log(rightIncidentMatrix);
         }
     });
     function showNewNumbers(mapLevels) {
@@ -70,10 +73,10 @@ document.addEventListener('DOMContentLoaded', function () {
         var _loop_1 = function (row) {
             var _loop_2 = function (column) {
                 if (adjacencyMatrix[row][column] === '1') {
-                    console.log("Старая строка");
-                    console.log(row);
-                    console.log("Старый столбец");
-                    console.log(column);
+                    // console.log("Старая строка")
+                    // console.log(row)
+                    // console.log("Старый столбец")
+                    // console.log(column)
                     mapLevels.forEach(function (map) {
                         if (map.get(row + 1) !== undefined) {
                             newRow = map.get(row + 1) - 1;
@@ -82,10 +85,10 @@ document.addEventListener('DOMContentLoaded', function () {
                             newColumn = map.get(column + 1) - 1;
                         }
                     });
-                    console.log("Новая строка");
-                    console.log(newRow);
-                    console.log("Новый столбец");
-                    console.log(newColumn);
+                    // console.log("Новая строка")
+                    // console.log(newRow)
+                    // console.log("Новый столбец")
+                    // console.log(newColumn)
                     arr[newRow][newColumn] = '1';
                 }
             };
