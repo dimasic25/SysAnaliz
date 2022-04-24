@@ -219,22 +219,4 @@ document.addEventListener('DOMContentLoaded', function () {
             rightIncidentMatrixWrapper.appendChild(row);
         }
     }
-    // получить множество левых инциденций по матрице смежности
-    function getLeftIncidentMatrix(adjacencyMatrix, matrixSize) {
-        var arr = getFilledMatrix(matrixSize, null);
-        for (var j = 0; j < matrixSize; j++) {
-            for (var i = 0; i < matrixSize; i++) {
-                var val = void 0;
-                if (adjacencyMatrix[i][j] !== '0') {
-                    var index = i;
-                    val = ++index;
-                }
-                else {
-                    val = '0';
-                }
-                arr[j][i] = val;
-            }
-        }
-        return arr;
-    }
 });
