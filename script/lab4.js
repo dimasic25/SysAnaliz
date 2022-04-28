@@ -16,34 +16,76 @@ document.addEventListener('DOMContentLoaded', function () {
         var matrixSize = selectElement.value;
         var rightIncidentSet = readRightIncidentSetFromUser(matrixSize);
         console.log(rightIncidentSet);
-        var shortestPaths = getShortestPaths(1, rightIncidentSet, matrixSize);
-        console.log(shortestPaths);
+        var resultMatrix = getFilledMatrix(matrixSize, 0);
+        for (var i = 1; i <= Number(matrixSize); i++) {
+            var shortestPaths = getShortestPaths(i, rightIncidentSet, matrixSize);
+            updateResultMatrix(resultMatrix, matrixSize, shortestPaths, i);
+        }
+        console.log(resultMatrix);
+        showMatrix(resultMatrix);
     });
+    function showMatrix(matrix) {
+        var matrixSize = matrix.length;
+        var adjacentMatrixElement = document.querySelector('.answer__adjacent-matrix');
+        adjacentMatrixElement.innerHTML = '';
+        for (var i = 0; i < matrixSize; i++) {
+            var rowValueAsString = '';
+            for (var j = 0; j < matrixSize; j++) {
+                var currentNumber = matrix[i][j];
+                rowValueAsString += "".concat(currentNumber, " ");
+            }
+            adjacentMatrixElement.innerHTML += "<div>".concat(rowValueAsString, "</div>");
+        }
+    }
     function getShortestPaths(vertix, rightIncidentSet, matrixSize) {
         // @ts-ignore
         var indexMap = new Map();
         var index = 0;
-        indexMap.set(index, vertix);
+        indexMap.set(index, [vertix]);
         // @ts-ignore
         var tagVertices = new Set();
         tagVertices.add(vertix);
-        var _loop_1 = function () {
-            var tempVertices = new Array(indexMap.get(index));
-            var vertices = [];
+        var tempVertices = indexMap.get(index);
+        var vertices = [1];
+        while (tagVertices.size < matrixSize && vertices.length !== 0) {
+            tempVertices = indexMap.get(index);
+            vertices = [];
             tempVertices.forEach(function (value) {
                 for (var row = 0; row < matrixSize; row++) {
                     if (rightIncidentSet[row][value - 1] === value) {
-                        vertices.push(row + 1);
+                        if (!tagVertices.has(row + 1)) {
+                            vertices.push(row + 1);
+                        }
                         tagVertices.add(row + 1);
                     }
                 }
             });
             indexMap.set(++index, vertices);
-        };
-        while (tagVertices.size !== matrixSize) {
-            _loop_1();
         }
         return indexMap;
+    }
+    function updateResultMatrix(resultMatrix, matrixSize, shortestPaths, index) {
+        for (var row = 0; row < matrixSize; row++) {
+            resultMatrix[row][index - 1] = findKey(shortestPaths, row + 1);
+        }
+    }
+    function findKey(shortestPaths, value) {
+        var val = -1;
+        shortestPaths.forEach(function (array, key) {
+            if (findElement(value, array)) {
+                val = key;
+                return;
+            }
+        });
+        return val;
+    }
+    function findElement(element, array) {
+        for (var index = 0; index < array.length; index++) {
+            if (array[index] === element) {
+                return true;
+            }
+        }
+        return false;
     }
     function readRightIncidentSetFromUser(matrixSize) {
         var matrix = getFilledMatrix(matrixSize, '0');

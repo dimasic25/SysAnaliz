@@ -30,31 +30,58 @@ document.addEventListener('DOMContentLoaded', () => {
 
         console.log(rightIncidentSet)
 
-        let shortestPaths = getShortestPaths(1, rightIncidentSet, matrixSize)
+        let resultMatrix = getFilledMatrix(matrixSize, 0)
 
-        console.log(shortestPaths)
+        for (let i = 1; i <= Number(matrixSize); i++) {
+            let shortestPaths = getShortestPaths(i, rightIncidentSet, matrixSize)
+            updateResultMatrix(resultMatrix, matrixSize, shortestPaths, i)
+        }
+
+        console.log(resultMatrix)
+
+        showMatrix(resultMatrix)
     })
 
-    function getShortestPaths(vertix, rightIncidentSet, matrixSize) {
+    function showMatrix(matrix): void {
+        let matrixSize = matrix.length;
+        let adjacentMatrixElement = document.querySelector('.answer__adjacent-matrix');
+
+        adjacentMatrixElement.innerHTML = ''
+        for (let i = 0; i < matrixSize; i++) {
+            let rowValueAsString = ''
+            for (let j = 0; j < matrixSize; j++) {
+                let currentNumber = matrix[i][j]
+                rowValueAsString += `${currentNumber} `
+            }
+            adjacentMatrixElement.innerHTML += `<div>${rowValueAsString}</div>`
+        }
+    }
+
+    function getShortestPaths(vertix: number, rightIncidentSet, matrixSize) {
         // @ts-ignore
         let indexMap = new Map()
 
         let index = 0
 
-        indexMap.set(index, vertix)
+        indexMap.set(index, [vertix])
         // @ts-ignore
         let tagVertices = new Set()
         tagVertices.add(vertix)
 
-        while (tagVertices.size !== matrixSize) {
-            let tempVertices = new Array(indexMap.get(index))
+        let tempVertices = indexMap.get(index)
+        let vertices = [1]
 
-            let vertices = []
+        while (tagVertices.size < matrixSize && vertices.length !== 0) {
+            tempVertices = indexMap.get(index)
+
+            vertices = []
 
             tempVertices.forEach(function (value) {
                 for (let row = 0; row < matrixSize; row++) {
                     if (rightIncidentSet[row][value - 1] === value) {
-                        vertices.push(row + 1)
+                        if (!tagVertices.has(row + 1)) {
+                            vertices.push(row + 1)
+                        }
                         tagVertices.add(row + 1)
                     }
                 }
@@ -64,6 +91,32 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         return indexMap
+    }
+
+    function updateResultMatrix(resultMatrix, matrixSize, shortestPaths, index) {
+        for (let row = 0; row < matrixSize; row++) {
+            resultMatrix[row][index - 1] = findKey(shortestPaths, row + 1)
+        }
+    }
+
+    function findKey(shortestPaths, value) {
+        let val = -1;
+        shortestPaths.forEach((array, key) => {
+            if (findElement(value, array)) {
+                val = key
+                return
+            }
+        })
+        return val
+    }
+
+    function findElement(element, array: Array<number>) {
+       for (let index = 0; index < array.length; index++) {
+           if (array[index] === element) {
+               return true
+           }
+       }
+       return false
     }
 
     function readRightIncidentSetFromUser(matrixSize) {

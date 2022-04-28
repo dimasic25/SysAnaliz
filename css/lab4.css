@@ -99,3 +99,19 @@ span {
     border: none;
     padding: 5px;
 }
+
+.answer {
+    margin-top: 10px;
+    font-size: 30px;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    flex-direction: column;
+}
+
+.answer__content {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    text-align: center;
+}
